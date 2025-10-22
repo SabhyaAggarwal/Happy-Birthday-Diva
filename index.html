@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Diva!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="screen active">
+        <div class="party-background"></div>
+        <h1 class="welcome-text">Welcome home!</h1>
+    </div>
+
+    <!-- Birthday Screen -->
+    <div id="birthday-screen" class="screen">
+        <div class="celebration-background"></div>
+        <div class="confetti-container"></div>
+        <div class="balloons-container">
+            <div class="balloon balloon-1"></div>
+            <div class="balloon balloon-2"></div>
+            <div class="balloon balloon-3"></div>
+            <div class="balloon balloon-4"></div>
+            <div class="balloon balloon-5"></div>
+        </div>
+        <h1 class="birthday-text">HAPPY BIRTHDAY DIVA!</h1>
+        <div class="sparkles"></div>
+    </div>
+
+    <audio id="birthday-audio" loop>
+        <source src="audio.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
