@@ -24,9 +24,79 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Generate sparkles
             generateSparkles();
+            
+            // Generate infinite balloons
+            startBalloonGeneration();
         }, 1000);
     }, 5000);
 });
+
+// Balloon generation system
+let frontBalloonActive = false;
+
+function startBalloonGeneration() {
+    // Generate initial batch of balloons
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            generateBalloon();
+        }, i * 800);
+    }
+    
+    // Continue generating balloons at regular intervals
+    setInterval(() => {
+        generateBalloon();
+    }, 2000);
+}
+
+function generateBalloon() {
+    const balloonsContainer = document.querySelector('.balloons-container');
+    const balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+    
+    // Balloon colors
+    const colors = [
+        'radial-gradient(circle at 30% 30%, #ff6b9d, #c44569)',
+        'radial-gradient(circle at 30% 30%, #4facfe, #00f2fe)',
+        'radial-gradient(circle at 30% 30%, #ffd93d, #f6b93b)',
+        'radial-gradient(circle at 30% 30%, #a8e6cf, #6bcf7f)',
+        'radial-gradient(circle at 30% 30%, #ff9ff3, #feca57)',
+        'radial-gradient(circle at 30% 30%, #a29bfe, #6c5ce7)',
+        'radial-gradient(circle at 30% 30%, #fd79a8, #e84393)',
+        'radial-gradient(circle at 30% 30%, #fdcb6e, #e17055)'
+    ];
+    
+    // Random properties
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    const randomLeft = 5 + Math.random() * 85; // Between 5% and 90%
+    const randomDuration = 8 + Math.random() * 4; // Between 8 and 12 seconds
+    
+    // Decide if this balloon should be in front (only if no front balloon is active)
+    // About 10% chance to be in front
+    const shouldBeInFront = !frontBalloonActive && Math.random() < 0.1;
+    
+    if (shouldBeInFront) {
+        balloon.classList.add('balloon-front');
+        frontBalloonActive = true;
+        
+        // After this balloon finishes, allow another front balloon
+        setTimeout(() => {
+            frontBalloonActive = false;
+        }, randomDuration * 1000);
+    } else {
+        balloon.classList.add('balloon-behind');
+    }
+    
+    balloon.style.background = randomColor;
+    balloon.style.left = randomLeft + '%';
+    balloon.style.animation = `balloon-fall ${randomDuration}s linear forwards`;
+    
+    balloonsContainer.appendChild(balloon);
+    
+    // Remove balloon after animation completes
+    setTimeout(() => {
+        balloon.remove();
+    }, randomDuration * 1000);
+}
 
 // Function to generate confetti
 function generateConfetti() {
