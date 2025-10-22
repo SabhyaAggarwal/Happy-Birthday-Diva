@@ -110,6 +110,12 @@ body {
     animation: birthday-bounce 2s ease-in-out infinite;
     text-align: center;
     font-weight: bold;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.birthday-text.slide-out-left {
+    transform: translateX(-120%);
+    opacity: 0;
 }
 
 @keyframes birthday-bounce {
@@ -243,3 +249,95 @@ body {
         height: 65px;
     }
 }
+
+/* Slideshow Screen Styles */
+#slideshow-screen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.slideshow-text {
+    position: absolute;
+    top: 50px;
+    font-size: 4rem;
+    color: #fff;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 30px rgba(255, 105, 180, 0.6);
+    z-index: 200;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slideshow-text.visible {
+    opacity: 1;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#slideshow-image {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+    transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+/* Slide animations */
+.slide-out-left {
+    animation: slideOutLeft 1s ease-in-out forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 1s ease-in-out forwards;
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-120%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design for Slideshow */
+@media (max-width: 768px) {
+    .slideshow-text {
+        font-size: 2rem;
+        top: 30px;
+    }
+    
+    #slideshow-image {
+        max-width: 90%;
+        max-height: 70%;
+    }
+}
+

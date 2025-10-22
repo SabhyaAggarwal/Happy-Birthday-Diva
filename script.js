@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const welcomeScreen = document.getElementById('welcome-screen');
     const birthdayScreen = document.getElementById('birthday-screen');
+    const slideshowScreen = document.getElementById('slideshow-screen');
     const audio = document.getElementById('birthday-audio');
     
     // After 5 seconds, transition to birthday screen
@@ -27,9 +28,95 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Generate infinite balloons
             startBalloonGeneration();
+            
+            // After 5 seconds on birthday screen, start slideshow
+            setTimeout(function() {
+                startSlideshow();
+            }, 5000);
         }, 1000);
     }, 5000);
 });
+
+// Slideshow functionality
+let currentImageIndex = 1;
+let slideshowInterval = null;
+
+function startSlideshow() {
+    const birthdayScreen = document.getElementById('birthday-screen');
+    const slideshowScreen = document.getElementById('slideshow-screen');
+    const birthdayText = document.querySelector('.birthday-text');
+    const slideshowText = document.querySelector('.slideshow-text');
+    const slideshowImage = document.getElementById('slideshow-image');
+    
+    // Slide out birthday text
+    birthdayText.classList.add('slide-out-left');
+    
+    // After text slides out, transition to slideshow screen
+    setTimeout(function() {
+        birthdayScreen.classList.remove('active');
+        slideshowScreen.classList.add('active');
+        
+        // Show first image
+        slideshowImage.src = '1.png';
+        slideshowImage.classList.add('slide-in-right');
+        
+        currentImageIndex = 1;
+        
+        // Transition through images 1-5
+        let transitionCount = 0;
+        const imageTransitionInterval = setInterval(function() {
+            if (currentImageIndex < 5) {
+                currentImageIndex++;
+                transitionToNextImage(currentImageIndex);
+                transitionCount++;
+            } else {
+                // After showing all 5 images, show text above and continue changing background
+                clearInterval(imageTransitionInterval);
+                
+                // Show the birthday text above the image
+                setTimeout(function() {
+                    slideshowText.classList.add('visible');
+                    
+                    // Continue changing images in the background
+                    startContinuousSlideshow();
+                }, 1000);
+            }
+        }, 3000); // Change image every 3 seconds
+    }, 1000);
+}
+
+function transitionToNextImage(imageNumber) {
+    const slideshowImage = document.getElementById('slideshow-image');
+    
+    // Slide out current image
+    slideshowImage.classList.remove('slide-in-right');
+    slideshowImage.classList.add('slide-out-left');
+    
+    // After slide out animation, change image and slide in
+    setTimeout(function() {
+        slideshowImage.src = imageNumber + '.png';
+        slideshowImage.classList.remove('slide-out-left');
+        slideshowImage.classList.add('slide-in-right');
+    }, 1000);
+}
+
+function startContinuousSlideshow() {
+    const slideshowImage = document.getElementById('slideshow-image');
+    let currentIndex = 1;
+    
+    // Continuously cycle through images
+    slideshowInterval = setInterval(function() {
+        currentIndex = (currentIndex % 5) + 1; // Cycle from 1 to 5
+        
+        // Fade transition for continuous slideshow
+        slideshowImage.style.opacity = '0';
+        
+        setTimeout(function() {
+            slideshowImage.src = currentIndex + '.png';
+            slideshowImage.style.opacity = '1';
+        }, 500);
+    }, 4000); // Change image every 4 seconds
+}
 
 // Balloon generation system
 let frontBalloonActive = false;
