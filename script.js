@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Slideshow functionality
 let currentImageIndex = 1;
 let slideshowInterval = null;
+const totalImages = 5;
 
 function startSlideshow() {
     const birthdayScreen = document.getElementById('birthday-screen');
@@ -56,6 +57,10 @@ function startSlideshow() {
         birthdayScreen.classList.remove('active');
         slideshowScreen.classList.add('active');
         
+        // Generate confetti and balloons for slideshow screen
+        generateSlideshowConfetti();
+        generateSlideshowBalloons();
+        
         // Show first image
         slideshowImage.src = '1.png';
         slideshowImage.classList.add('slide-in-right');
@@ -65,7 +70,7 @@ function startSlideshow() {
         // Transition through images 1-5
         let transitionCount = 0;
         const imageTransitionInterval = setInterval(function() {
-            if (currentImageIndex < 5) {
+            if (currentImageIndex < totalImages) {
                 currentImageIndex++;
                 transitionToNextImage(currentImageIndex);
                 transitionCount++;
@@ -106,7 +111,7 @@ function startContinuousSlideshow() {
     
     // Continuously cycle through images
     slideshowInterval = setInterval(function() {
-        currentIndex = (currentIndex % 5) + 1; // Cycle from 1 to 5
+        currentIndex = (currentIndex % totalImages) + 1; // Cycle from 1 to 5
         
         // Fade transition for continuous slideshow
         slideshowImage.style.opacity = '0';
@@ -116,6 +121,125 @@ function startContinuousSlideshow() {
             slideshowImage.style.opacity = '1';
         }, 500);
     }, 4000); // Change image every 4 seconds
+}
+
+// Function to generate confetti for slideshow screen
+function generateSlideshowConfetti() {
+    const confettiContainer = document.querySelector('.slideshow-confetti-container');
+    const colors = ['#ff6b9d', '#4facfe', '#ffd93d', '#6bcf7f', '#ff9ff3', '#feca57'];
+    const confettiCount = 100;
+    
+    for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        
+        // Random properties
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        const randomLeft = Math.random() * 100;
+        const randomDelay = Math.random() * 3;
+        const randomDuration = 3 + Math.random() * 4;
+        const randomSize = 5 + Math.random() * 10;
+        
+        confetti.style.backgroundColor = randomColor;
+        confetti.style.left = randomLeft + '%';
+        confetti.style.width = randomSize + 'px';
+        confetti.style.height = randomSize + 'px';
+        confetti.style.animationDelay = randomDelay + 's';
+        confetti.style.animationDuration = randomDuration + 's';
+        
+        // Random shapes
+        if (Math.random() > 0.5) {
+            confetti.style.borderRadius = '50%';
+        }
+        
+        confettiContainer.appendChild(confetti);
+        
+        // Remove and recreate confetti for continuous effect
+        setTimeout(function() {
+            confetti.remove();
+            createNewSlideshowConfetti(confettiContainer, colors);
+        }, (randomDelay + randomDuration) * 1000);
+    }
+}
+
+// Function to create new confetti piece for slideshow
+function createNewSlideshowConfetti(container, colors) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    const randomLeft = Math.random() * 100;
+    const randomDuration = 3 + Math.random() * 4;
+    const randomSize = 5 + Math.random() * 10;
+    
+    confetti.style.backgroundColor = randomColor;
+    confetti.style.left = randomLeft + '%';
+    confetti.style.width = randomSize + 'px';
+    confetti.style.height = randomSize + 'px';
+    confetti.style.animationDuration = randomDuration + 's';
+    
+    if (Math.random() > 0.5) {
+        confetti.style.borderRadius = '50%';
+    }
+    
+    container.appendChild(confetti);
+    
+    setTimeout(function() {
+        confetti.remove();
+        createNewSlideshowConfetti(container, colors);
+    }, randomDuration * 1000);
+}
+
+// Function to generate balloons for slideshow screen
+function generateSlideshowBalloons() {
+    // Generate initial batch of balloons
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            generateSlideshowBalloon();
+        }, i * 800);
+    }
+    
+    // Continue generating balloons at regular intervals
+    setInterval(() => {
+        generateSlideshowBalloon();
+    }, 2000);
+}
+
+function generateSlideshowBalloon() {
+    const balloonsContainer = document.querySelector('.slideshow-balloons-container');
+    const balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+    
+    // Balloon colors
+    const colors = [
+        'radial-gradient(circle at 30% 30%, #ff6b9d, #c44569)',
+        'radial-gradient(circle at 30% 30%, #4facfe, #00f2fe)',
+        'radial-gradient(circle at 30% 30%, #ffd93d, #f6b93b)',
+        'radial-gradient(circle at 30% 30%, #a8e6cf, #6bcf7f)',
+        'radial-gradient(circle at 30% 30%, #ff9ff3, #feca57)',
+        'radial-gradient(circle at 30% 30%, #a29bfe, #6c5ce7)',
+        'radial-gradient(circle at 30% 30%, #fd79a8, #e84393)',
+        'radial-gradient(circle at 30% 30%, #fdcb6e, #e17055)'
+    ];
+    
+    // Random properties
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    const randomLeft = 5 + Math.random() * 85; // Between 5% and 90%
+    const randomDuration = 8 + Math.random() * 4; // Between 8 and 12 seconds
+    
+    // All balloons stay behind in slideshow (z-index 30)
+    balloon.classList.add('balloon-behind');
+    
+    balloon.style.background = randomColor;
+    balloon.style.left = randomLeft + '%';
+    balloon.style.animation = `balloon-fall ${randomDuration}s linear forwards`;
+    
+    balloonsContainer.appendChild(balloon);
+    
+    // Remove balloon after animation completes
+    setTimeout(() => {
+        balloon.remove();
+    }, randomDuration * 1000);
 }
 
 // Balloon generation system
