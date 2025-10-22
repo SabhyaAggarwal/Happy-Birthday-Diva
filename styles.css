@@ -1,0 +1,265 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+.screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.screen.active {
+    opacity: 1;
+}
+
+/* Welcome Screen Styles */
+#welcome-screen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.party-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 90% 60%, rgba(255, 255, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.3) 0%, transparent 2%),
+        radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.3) 0%, transparent 2%);
+    background-size: 200% 200%;
+    animation: party-pulse 3s ease-in-out infinite;
+}
+
+@keyframes party-pulse {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.welcome-text {
+    font-size: 5rem;
+    color: white;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+                 0 0 40px rgba(255, 255, 255, 0.6);
+    z-index: 10;
+    animation: welcome-glow 2s ease-in-out infinite;
+}
+
+@keyframes welcome-glow {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Birthday Screen Styles */
+#birthday-screen {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 25%, #ffd93d 50%, #6bcf7f 75%, #4d96ff 100%);
+    background-size: 400% 400%;
+    animation: rainbow-bg 10s ease infinite;
+}
+
+@keyframes rainbow-bg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.celebration-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 15% 25%, rgba(255, 215, 0, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 85% 15%, rgba(255, 105, 180, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 35% 75%, rgba(135, 206, 250, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 65% 85%, rgba(144, 238, 144, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 95% 55%, rgba(255, 165, 0, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 5% 85%, rgba(255, 192, 203, 0.4) 0%, transparent 3%);
+    animation: celebration-float 4s ease-in-out infinite;
+}
+
+@keyframes celebration-float {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-20px) scale(1.1); }
+}
+
+.birthday-text {
+    font-size: 6rem;
+    color: #fff;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 30px rgba(255, 105, 180, 0.6),
+        0 0 40px rgba(255, 105, 180, 0.4);
+    z-index: 100;
+    animation: birthday-bounce 2s ease-in-out infinite;
+    text-align: center;
+    font-weight: bold;
+}
+
+@keyframes birthday-bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-20px) scale(1.05); }
+    50% { transform: translateY(-10px) scale(1.03); }
+    75% { transform: translateY(-15px) scale(1.04); }
+}
+
+/* Confetti Styles */
+.confetti-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #f0f;
+    animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Balloons Styles */
+.balloons-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 30;
+}
+
+.balloon {
+    position: absolute;
+    width: 80px;
+    height: 100px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: balloon-float 6s ease-in-out infinite;
+}
+
+.balloon::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 150px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.balloon-1 {
+    left: 10%;
+    bottom: -100px;
+    background: radial-gradient(circle at 30% 30%, #ff6b9d, #c44569);
+    animation-delay: 0s;
+}
+
+.balloon-2 {
+    left: 25%;
+    bottom: -100px;
+    background: radial-gradient(circle at 30% 30%, #4facfe, #00f2fe);
+    animation-delay: 0.5s;
+}
+
+.balloon-3 {
+    left: 45%;
+    bottom: -100px;
+    background: radial-gradient(circle at 30% 30%, #ffd93d, #f6b93b);
+    animation-delay: 1s;
+}
+
+.balloon-4 {
+    left: 65%;
+    bottom: -100px;
+    background: radial-gradient(circle at 30% 30%, #a8e6cf, #6bcf7f);
+    animation-delay: 1.5s;
+}
+
+.balloon-5 {
+    left: 85%;
+    bottom: -100px;
+    background: radial-gradient(circle at 30% 30%, #ff9ff3, #feca57);
+    animation-delay: 2s;
+}
+
+@keyframes balloon-float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-30px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+/* Sparkles */
+.sparkles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 90;
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 10px white;
+    animation: sparkle-twinkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle-twinkle {
+    0%, 100% { opacity: 0; transform: scale(0); }
+    50% { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .welcome-text {
+        font-size: 3rem;
+    }
+    
+    .birthday-text {
+        font-size: 3rem;
+        padding: 0 20px;
+    }
+    
+    .balloon {
+        width: 50px;
+        height: 65px;
+    }
+}
