@@ -110,6 +110,12 @@ body {
     animation: birthday-bounce 2s ease-in-out infinite;
     text-align: center;
     font-weight: bold;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+.birthday-text.slide-out-left {
+    transform: translateX(-120%);
+    opacity: 0;
 }
 
 @keyframes birthday-bounce {
@@ -154,7 +160,7 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 30;
+    overflow: hidden;
 }
 
 .balloon {
@@ -162,7 +168,7 @@ body {
     width: 80px;
     height: 100px;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    animation: balloon-float 6s ease-in-out infinite;
+    top: -120px;
 }
 
 .balloon::before {
@@ -176,50 +182,30 @@ body {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-.balloon-1 {
-    left: 10%;
-    bottom: -100px;
-    background: radial-gradient(circle at 30% 30%, #ff6b9d, #c44569);
-    animation-delay: 0s;
+.balloon-behind {
+    z-index: 30;
 }
 
-.balloon-2 {
-    left: 25%;
-    bottom: -100px;
-    background: radial-gradient(circle at 30% 30%, #4facfe, #00f2fe);
-    animation-delay: 0.5s;
+.balloon-front {
+    z-index: 110;
+    opacity: 0.3;
 }
 
-.balloon-3 {
-    left: 45%;
-    bottom: -100px;
-    background: radial-gradient(circle at 30% 30%, #ffd93d, #f6b93b);
-    animation-delay: 1s;
-}
-
-.balloon-4 {
-    left: 65%;
-    bottom: -100px;
-    background: radial-gradient(circle at 30% 30%, #a8e6cf, #6bcf7f);
-    animation-delay: 1.5s;
-}
-
-.balloon-5 {
-    left: 85%;
-    bottom: -100px;
-    background: radial-gradient(circle at 30% 30%, #ff9ff3, #feca57);
-    animation-delay: 2s;
-}
-
-@keyframes balloon-float {
+@keyframes balloon-fall {
     0% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(0) translateX(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(25vh) translateX(-20px) rotate(-5deg);
     }
     50% {
-        transform: translateY(-30px) rotate(5deg);
+        transform: translateY(50vh) translateX(20px) rotate(5deg);
+    }
+    75% {
+        transform: translateY(75vh) translateX(-15px) rotate(-3deg);
     }
     100% {
-        transform: translateY(0) rotate(0deg);
+        transform: translateY(100vh) translateX(10px) rotate(2deg);
     }
 }
 
@@ -263,3 +249,132 @@ body {
         height: 65px;
     }
 }
+
+/* Slideshow Screen Styles */
+#slideshow-screen {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 25%, #ffd93d 50%, #6bcf7f 75%, #4d96ff 100%);
+    background-size: 400% 400%;
+    animation: rainbow-bg 10s ease infinite;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.slideshow-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 15% 25%, rgba(255, 215, 0, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 85% 15%, rgba(255, 105, 180, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 35% 75%, rgba(135, 206, 250, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 65% 85%, rgba(144, 238, 144, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 95% 55%, rgba(255, 165, 0, 0.4) 0%, transparent 3%),
+        radial-gradient(circle at 5% 85%, rgba(255, 192, 203, 0.4) 0%, transparent 3%);
+    animation: celebration-float 4s ease-in-out infinite;
+    z-index: 1;
+}
+
+.slideshow-confetti-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.slideshow-balloons-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 30;
+}
+
+.slideshow-text {
+    position: absolute;
+    top: 50px;
+    font-size: 4rem;
+    color: #fff;
+    text-shadow: 
+        0 0 10px rgba(255, 255, 255, 0.8),
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 30px rgba(255, 105, 180, 0.6);
+    z-index: 250;
+    text-align: center;
+    font-weight: bold;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slideshow-text.visible {
+    opacity: 1;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 150;
+}
+
+#slideshow-image {
+    max-width: 90%;
+    max-height: 85%;
+    object-fit: contain;
+    border-radius: 20px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    transition: transform 1s ease-in-out, opacity 0.5s ease-in-out;
+    z-index: 150;
+}
+
+/* Slide animations */
+.slide-out-left {
+    animation: slideOutLeft 1s ease-in-out forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 1s ease-in-out forwards;
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-120%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design for Slideshow */
+@media (max-width: 768px) {
+    .slideshow-text {
+        font-size: 2rem;
+        top: 30px;
+    }
+    
+    #slideshow-image {
+        max-width: 90%;
+        max-height: 70%;
+    }
+}
+
