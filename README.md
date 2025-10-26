@@ -1,64 +1,71 @@
-# 🧠 **Smart Door Lock Observation Sheet**
+# Smart Door Lock — Observation Sheet
 
-As part of this project, you have designed a **Smart Door Lock** model.  
-Now, let's explore how the door lock behaves under different conditions such as **recognition accuracy**, **response time**, and **connectivity**.  
+This document records practical observations for the Smart Door Lock model. The goal is to test how the system behaves under different conditions such as recognition accuracy, response time, and network connectivity.
 
-> ⚙️ **Note:** For all observations, test the system in the same location and environment to maintain fairness and consistency.  
-> Ensure that the **ESP32-CAM**, **Arduino**, and **lock mechanism** are properly powered and connected before each experiment.
+Note: For consistent results, run all tests in the same location and environment. Make sure the ESP32-CAM, Arduino, and lock mechanism are powered and connected before each test.
 
 ---
 
-## 🔹 **1. Impact of Face Recognition Accuracy**
+## 1. Impact of Face Recognition Accuracy
 
-**Objective:**  
-To explore and understand how the face recognition system performs with different lighting and face angles.
+Objective:
+To evaluate how the face recognition system performs under different lighting conditions and face angles.
 
-**Experiment:**  
-Test the door lock with different lighting conditions and face angles. Predict whether the door will unlock successfully. Conduct the experiment and record the actual result.
+Experiment:
+Test the door lock with different lighting conditions and face angles. Predict whether the door will unlock, then perform the test and record the result.
 
-| # | Lighting Condition | Face Angle | **Prediction** | **Observation** |
-|:-:|:------------------:|:-----------:|:---------------:|:----------------:|
-| 01 | 🌞 <span style="color:#FFD700;">Bright daylight</span> | 🧍 Front-facing | ✅ <span style="color:green;">Unlocks</span> | 🔓 <span style="color:green;">Unlocked instantly</span> |
-| 02 | 💡 <span style="color:#FFB6C1;">Dim indoor light</span> | ↩️ Side-facing | ⚠️ <span style="color:orange;">May fail</span> | ❌ <span style="color:red;">Failed to detect face</span> |
-
----
-
-## 🔹 **2. Impact of Distance from Camera**
-
-**Objective:**  
-To investigate and understand how distance affects the camera’s recognition and lock response.
-
-**Experiment:**  
-Stand at different distances from the ESP32-CAM and predict whether the system will unlock. Record the actual observation.
-
-| # | Distance from Camera | **Prediction** | **Observation** |
-|:-:|:--------------------:|:---------------:|:----------------:|
-| 03 | 📏 <span style="color:#1E90FF;">30 cm</span> | ✅ <span style="color:green;">Unlocks</span> | 🔓 <span style="color:green;">Unlocked successfully</span> |
-| 04 | 📏 <span style="color:#DC143C;">1 meter</span> | ⚠️ <span style="color:orange;">May not detect</span> | ❌ <span style="color:red;">Failed to recognize face</span> |
+| #  | Lighting Condition | Face Angle   | Prediction | Observation              |
+|:--:|:------------------:|:------------:|:----------:|:------------------------:|
+| 01 | Bright daylight    | Front-facing | Unlocks    | Unlocked instantly       |
+| 02 | Dim indoor light   | Side-facing  | May fail   | Failed to detect face    |
 
 ---
 
-## 🔹 **3. Impact of Network Connectivity**
+## 2. Impact of Distance from Camera
 
-**Objective:**  
-To explore how network strength affects the response time of the smart door lock.
+Objective:
+To understand how distance affects recognition and lock response.
 
-**Experiment:**  
+Experiment:
+Stand at different distances from the ESP32-CAM, predict whether the system will unlock, then record the actual observation.
+
+| #  | Distance from Camera | Prediction     | Observation                 |
+|:--:|:--------------------:|:--------------:|:---------------------------:|
+| 03 | 30 cm                | Unlocks        | Unlocked successfully       |
+| 04 | 1 meter              | May not detect | Failed to recognize face    |
+
+---
+
+## 3. Impact of Network Connectivity
+
+Objective:
+To measure how Wi-Fi signal strength affects the system's response time.
+
+Experiment:
 Test the system under different Wi-Fi signal strengths. Predict and record how long (in seconds) the door takes to unlock after face detection.
 
-| # | Wi-Fi Signal Strength | **Prediction (Time in seconds)** | **Observation (Time in seconds)** |
-|:-:|:---------------------:|:--------------------------------:|:----------------------------------:|
-| 05 | 📶 <span style="color:green;">Strong (Full bars)</span> | 1 | 1.2 |
-| 06 | 📶 <span style="color:red;">Weak (1 bar)</span> | 4 | 4.5 |
+| #  | Wi-Fi Signal Strength | Prediction (s) | Observation (s) |
+|:--:|:---------------------:|:--------------:|:---------------:|
+| 05 | Strong (full bars)    | 1.0            | 1.2             |
+| 06 | Weak (1 bar)          | 4.0            | 4.5             |
 
 ---
 
-## 🔹 **Additional Observations**
+## Additional Observations
 
-| **Observation Type** | **Notes** |
-|:----------------------|:----------|
-| ⚡ Power Supply Stability | <span style="color:green;">Stable with 5V regulated source</span> |
-| ☁️ Bluetooth/Cloud Command Response | <span style="color:orange;">Commands received with 1-second delay</span> |
-| 🔐 Relay/Lock Response Consistency | <span style="color:green;">Reliable and consistent performance</span> |
+| Observation Type                 | Notes                                      |
+|:---------------------------------|:-------------------------------------------|
+| Power supply stability           | Stable with a regulated 5V source          |
+| Cloud / remote command response  | Commands arrive with about a 1 second delay |
+| Relay / lock response consistency| Reliable and consistent                    |
 
 ---
+
+## Notes and suggestions
+
+- Run each test multiple times (for example, three runs per condition) and record the average to reduce random variation.
+- When a test fails, note ambient conditions (temperature, strong backlight, obstructions) and any console or serial output from the ESP32-CAM that might explain the failure.
+- If recognition is inconsistent in low light, consider adding a small IR or LED illumination source near the camera or improving the face-detection thresholds.
+- For weak Wi-Fi situations, test with the ESP32 connected to a different access point or use a mobile hotspot to compare results. A local fallback (on-device recognition without cloud dependency) can improve responsiveness.
+
+If you want any of these changes reworded, shortened, or converted into a printable checklist or test form, I can prepare that next.
