@@ -58,14 +58,3 @@ Test the system under different Wi-Fi signal strengths. Predict and record how l
 | Power supply stability           | Stable with a regulated 5V source          |
 | Cloud / remote command response  | Commands arrive with about a 1 second delay |
 | Relay / lock response consistency| Reliable and consistent                    |
-
----
-
-## Notes and suggestions
-
-- Run each test multiple times (for example, three runs per condition) and record the average to reduce random variation.
-- When a test fails, note ambient conditions (temperature, strong backlight, obstructions) and any console or serial output from the ESP32-CAM that might explain the failure.
-- If recognition is inconsistent in low light, consider adding a small IR or LED illumination source near the camera or improving the face-detection thresholds.
-- For weak Wi-Fi situations, test with the ESP32 connected to a different access point or use a mobile hotspot to compare results. A local fallback (on-device recognition without cloud dependency) can improve responsiveness.
-
-If you want any of these changes reworded, shortened, or converted into a printable checklist or test form, I can prepare that next.
